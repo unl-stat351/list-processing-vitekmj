@@ -12,14 +12,18 @@ You can see the purpose of this assignment as well as the skills and knowledge y
 
 # Data Source
 
-JSON data files for this assignment were obtained from the TVMaze API for three different  Doctor Who series:
+JSON data files for this assignment were obtained from the TVMaze API for three different  Doctor Who series as well as two different spin-offs. 
 
-- [2023-2025](https://www.tvmaze.com/shows/72724/doctor-who)
-- [2005-2022](https://www.tvmaze.com/shows/210/doctor-who)
-- [1963-1996](https://www.tvmaze.com/shows/766/doctor-who)
+- Dr. Who [2023-2025](https://www.tvmaze.com/shows/72724/doctor-who)
+- Dr. Who [2005-2022](https://www.tvmaze.com/shows/210/doctor-who)
+- Dr. Who [1963-1996](https://www.tvmaze.com/shows/766/doctor-who)
+- [The Sarah Jane Adventures (2007-2020)](https://www.tvmaze.com/shows/970/the-sarah-jane-adventures)
+- [Torchwood (2006-2011)](https://www.tvmaze.com/shows/659/torchwood)
+- [Torchwood: Web of Lies (2011)](https://www.tvmaze.com/shows/26694/torchwood-web-of-lies)
 
 # Warming Up
 
+For this portion of the assignment, only work with the canonical Dr. Who files (drwho2023.json, drwho2005.json, drwho1963.json). 
 
 ## Parse the file
 
@@ -33,7 +37,7 @@ How are the data objects stored?
 
 Create a nested markdown list showing what variables are nested at each level of the JSON file. Include an 'episode' object that is a stand-in for a generic episode (e.g. don't create a list with all 700+ episodes in it, just show what a single episode has). Make sure you use proper markdown formatting to ensure that the lists are rendered properly when you compile your document.
 
-Hint: If you're working with the JSON file, it may help to find-replace all commas followed by another punctuation mark with ,\n(2nd punctuation mark). This adds newlines to the JSON file and makes it easier for humans to read. 
+Hint: The `prettify()` function in the R package `jsonlite` will spit out a better-formatted version of a JSON file. 
 
 ----
 
@@ -74,7 +78,7 @@ Print out the first 5 rows of each table that you create (but no more)!
 
 ## Examining Episode Air Dates
 
-Visually represent the length between adjacent episodes (episodes in the same season) across all seasons of Dr. Who. You may need to create a factor to indicate which Dr. Who series is indicated, as there will be a Season 1 for each of the series. 
+Visually represent the length of time between air dates of adjacent episodes within the same season, across all seasons of Dr. Who. You may need to create a factor to indicate which Dr. Who series is indicated, as there will be a Season 1 for each of the series. 
 Your plot must have appropriate labels and a title.
 
 ---
@@ -85,6 +89,78 @@ code chunk here
 
 In 2-3 sentences, explain what conclusions you might draw from the data. What patterns do you notice? Are there data quality issues?
 
-# Timey-Wimey Episodes
+# Timey-Wimey Series and Episodes
 
+## Setting Up
+
+In this section of the assignment, you will work with all of the provided JSON files. 
+Use a functional programming approach to read in all of the files and bind them together. 
+
+----
+
+functional code goes here
+
+----
+
+Then, use the processing code you wrote for the previous section to perform appropriate data cleaning steps. 
+At the end of the chunk, your data should be in a reasonably tidy, rectangular form with appropriate data types. 
+Call this rectangular table `whoverse`. 
+
+----
+
+Cleaning code goes here
+
+----
+
+
+## Air Time
+
+Investigate the air time of the episodes relative to the air date, series, and season.
+It may help to know that the [watershed](https://en.wikipedia.org/wiki/Watershed_(broadcasting)) period in the UK is 9:00pm - 5:30am. 
+Content that is unsuitable for minors may only be shown during this window.
+What conclusions do you draw about the target audience for each show? 
+
+How can you explain any shows in the Dr. Who universe which do not have airtimes provided?
+
+## Another Layer of JSON
+
+Use the show URL (`_links` > `show` > `href`) to read in the JSON file for each show. 
+As with scraping, it is important to be polite and not make unnecessary server calls, so pre-process the data to ensure that you only make one server call for each show.
+You should use a functional programming approach when reading in these files. 
+
+----
+
+Read in JSON files from URLs here
+
+----
+
+Process the JSON files using a functional approach and construct an appropriate table for the combined data you've acquired during this step (no need to join the data with the full `whoverse` episode-level data). 
+
+----
+
+Process JSON files to make a table here
+
+----
+
+What keys would you use to join this data with the `whoverse` episode level data? Explain.
+
+> Explanation
+
+
+## Explore!
+
+Use the data you've assembled to answer a question you find interesting about this data.
+Any graphics you make should have appropriate titles and axis labels. 
+Tables should be reasonably concise (e.g. don't show all 900 episodes in a table), generated in a reproducible fashion, and formatted with markdown. 
+Any results (graphics, tables, models) should be explained with at least 2-3 sentences. 
+
+If you're stuck, consider examining the frequency of words in the episode descriptions across different series or seasons. Or, look at the episode guest cast by appending `/guestcast/` to the episode URL and see whether there are common guests across different seasons. 
+
+----
+
+Question goes here
+
+----
+
+Code goes here -- once you output a result, you should explain it using markdown text, and then start a new code chunk to continue your exploration. 
 

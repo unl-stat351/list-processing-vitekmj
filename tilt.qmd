@@ -63,6 +63,27 @@ This assignment will help you to become familiar with important knowledge in thi
         - [ ] First 5 rows of each table are printed out
     5. Examining Episode Air Dates
         - [ ] Plot has appropriate axes, axis labels, and title
+        - [ ] The geom used in the plot is appropriate for displaying the data
         - [ ] Plot shows length between adjacent episodes by season across all seasons
         - [ ] Different series of Dr. Who are handled successfully
         - [ ] Plot is described appropriately and any visually interesting patterns are mentioned. 
+
+2. Timey-Wimey Series and Episodes
+    1. Setting Up
+        - [ ] Code to read in files looks for JSON files in the working directory and then applies a function to read in data from each file (e.g. functional programming)
+        - [ ] Processing code is very similar to that used in previous sections -- that is, the code is flexible enough to be reused.
+        - [ ] data table is appropriately named
+        - [ ] data table generated is reasonably tidy and has appropriate types in the columns
+    2. Air Time
+        - [ ] Investigative code is provided and follows a logical sequence
+        - [ ] Conclusions are drawn relating airtimes to target audiences. 
+        - [ ] Shows without airtimes (Torchwood: Web of Lies) are explained in a reasonable manner. 
+    3. Another Layer of JSON
+        - [ ] JSON files are read in using a functional approach
+        - [ ] Minimal server calls are used
+        - [ ] Keys provided for joins are reasonable, and meet the technical definition of a key.
+    4. Explore!
+        - [ ] Question requires at least a couple of processing steps before it is possible to answer.
+        - [ ] Graphics or tables are well formatted and selected to convey appropriate information.
+        - [ ] Graphics or tables are explained with at least 2-3 sentences
+        - [ ] Code makes use of functional programming. 
