@@ -1,0 +1,77 @@
+---
+title: "Lab: List Processing"
+author: "Your Name Here"
+format: html
+number-sections: true
+number-depth: 2
+---
+
+::: callout
+You can see the purpose of this assignment as well as the skills and knowledge you should be using and acquiring, in the [Transparency in Learning and Teaching (TILT)](tilt.qmd) document in this repository. The TILT document also contains a checklist for self-reflection that will provide some guidance on how the assignment will be graded. 
+:::
+
+# Data Source
+
+JSON data files for this assignment were obtained from the TVMaze API for three different  Doctor Who series:
+
+- [2023-2025](https://www.tvmaze.com/shows/72724/doctor-who)
+- [2005-2022](https://www.tvmaze.com/shows/210/doctor-who)
+- [1963-1996](https://www.tvmaze.com/shows/766/doctor-who)
+
+# Warming Up
+
+
+## Parse the file
+
+Add a code chunk that will read each of the JSON files in. 
+Store the data in a `drwhoYYYY` object, where `YYYY` is the first year the series  began to air. 
+How are the data objects stored?
+
+---
+
+## Examining List Data Structures
+
+Create a nested markdown list showing what variables are nested at each level of the JSON file. Include an 'episode' object that is a stand-in for a generic episode (e.g. don't create a list with all 700+ episodes in it, just show what a single episode has). Make sure you use proper markdown formatting to ensure that the lists are rendered properly when you compile your document.
+
+Hint: If you're working with the JSON file, it may help to find-replace all commas followed by another punctuation mark with ,\n(2nd punctuation mark). This adds newlines to the JSON file and makes it easier for humans to read. 
+
+----
+
+List here
+
+----
+
+Is there any information stored in the list structure that you feel is redundant? If so, why?
+
+
+
+## Develop A Strategy
+
+Consider what information you would need to examine the structure of Dr. Who episodes over time (show runtime, season length, specials) as well as the ratings, combining information across all three data files. 
+
+Sketch one or more rectangular data tables that look like your expected output.
+
+
+## Implement Your Strategy
+
+Add a code chunk that will convert the JSON files into the table(s) you sketched above. 
+Make sure that the resulting tables have the correct variable types (e.g., dates should not be stored as character variables).
+
+Print out the first 5 rows of each table that you create (but no more)!
+
+## Examining Episode Air Dates
+
+Visually represent the length between adjacent episodes (episodes in the same season) across all seasons of Dr. Who. You may need to create a factor to indicate which Dr. Who series is indicated, as there will be a Season 1 for each of the series. 
+Your plot must have appropriate labels and a title.
+
+---
+
+code chunk here
+
+---
+
+In 2-3 sentences, explain what conclusions you might draw from the data. What patterns do you notice? Are there data quality issues?
+
+# Timey-Wimey Episodes
+
+
