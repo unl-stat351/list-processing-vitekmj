@@ -1,0 +1,54 @@
+---
+title: "List Processing TILT Information"
+format: html
+---
+
+## Purpose
+
+Data scientists and statisticians must be able to take data that is in its natural, messy form and transform it into tidy data, making and documenting the transformations and considering their impact on inference and interpretation of the data.
+Many data formats, such as JSON, XML, and YAML, do not assume a rectangular data format where observations are in rows and variables are in columns. 
+There are also many situations where data may be nested or networked in its natural form. 
+It is important to be able to convert between formats, identifying the critical pieces of information in any data structure and developing a strategy to convert the data into something that can be analyzed or visualized effectively. 
+This assignment will help you understand and leverage list processing techniques to tidy nested and record-based data. 
+
+### Skills
+
+This assignment will help you practice the following skills which are important for being able to access and work with data:
+
+- Identify the structure of JSON and XML files
+- Use functional programming to apply functions to lists in order to extract and/or process data efficiently
+- Transform record-based formats into one or more rectangular table(s) that may be linked by a key variable.
+- Identify areas where quality control checks may be necessary when converting data between record-based and tabular formats
+
+
+### Knowledge
+
+This assignment will help you to become familiar with important knowledge in this discipline:
+
+- Record-based data structures
+- Reading and constructing database schema (descriptions of variables in data tables)
+- Functional programming techniques
+
+## Success Criteria
+
+### General Criteria
+
+- [ ] Student's name is included at top of assignment
+- [ ] Document compiles on a different machine
+- [ ] Compiled document is formatted well
+- [ ] All code in the document is contained in appropriately formatted code chunks
+- [ ] Compiled document does not include long sections of printed data, making use of `head` and `tail` commands to show only a few rows of data during data cleaning.
+- [ ] Student answers are below the `---` separator and above the next prompt, or in cases where questions are enumerated, student answers are indicated using the quote indicator, `> ` and the placeholder text `Your answer here` has been removed and replaced with the answer. 
+
+
+### Task specific Criteria
+
+1. Warming Up
+    1. Parse the file
+        - [ ] Code chunk is added correctly
+        - [ ] Three drwhoYYYY objects are created: `drwho1963`, `drwho2005`, and `drwho2023`
+        - [ ] 
+    2. Examining List Data Structures
+        - [ ] List structure is properly indented to show different levels of nesting
+        - [ ] List structure is in valid markdown and renders as an unordered list
+        - [ ] 
