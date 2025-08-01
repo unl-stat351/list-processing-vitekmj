@@ -50,5 +50,19 @@ This assignment will help you to become familiar with important knowledge in thi
         - [ ] 
     2. Examining List Data Structures
         - [ ] List structure is properly indented to show different levels of nesting
-        - [ ] List structure is in valid markdown and renders as an unordered list
-        - [ ] 
+        - [ ] List structure is in valid markdown and renders as an unordered, nested list
+        - [ ] Redundant data question is answered thoughtfully
+    3. Develop a Strategy
+        - [ ] Rectangular data structure contains all relevant information
+        - [ ] Sketch is included successfully, either using one or more markdown tables or an image.
+        - [ ] A reasonable sequence of operations are provided in an ordered list
+    4. Implement Your Strategy
+        - [ ] Code chunk is added correctly
+        - [ ] JSON files are converted into tabular data
+        - [ ] Variables in tabular data are correctly formatted using appropriate types
+        - [ ] First 5 rows of each table are printed out
+    5. Examining Episode Air Dates
+        - [ ] Plot has appropriate axes, axis labels, and title
+        - [ ] Plot shows length between adjacent episodes by season across all seasons
+        - [ ] Different series of Dr. Who are handled successfully
+        - [ ] Plot is described appropriately and any visually interesting patterns are mentioned. 

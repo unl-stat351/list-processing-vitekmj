@@ -49,8 +49,21 @@ Is there any information stored in the list structure that you feel is redundant
 
 Consider what information you would need to examine the structure of Dr. Who episodes over time (show runtime, season length, specials) as well as the ratings, combining information across all three data files. 
 
-Sketch one or more rectangular data tables that look like your expected output.
+Sketch one or more rectangular data tables that look like your expected output. Remember that if you link to an image, you must link to something with a picture extension (`.png`, `.jpg`), and if you reference a file it should be using a local path and you must also add the picture to your git repository. 
 
+---
+
+Sketch goes here
+
+---
+
+What operations will you need to perform to get the data into a form matching your sketch? Make an ordered list of steps you need to take.
+
+---
+
+1. ... fill me in
+2. ...
+3. ...
 
 ## Implement Your Strategy
 
