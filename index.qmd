@@ -1,6 +1,6 @@
 ---
 title: "Lab: List Processing"
-author: "Your Name Here"
+author: "Max Vitek"
 format: html
 number-sections: true
 number-depth: 2
@@ -11,8 +11,7 @@ You can see the purpose of this assignment as well as the skills and knowledge y
 :::
 
 # Data Source
-
-JSON data files for this assignment were obtained from the TVMaze API for three different  Doctor Who series as well as two different spin-offs. 
+JSON data files for this assignment were obtained from the TVMaze API for three different Doctor Who series as well as two different spin-offs. 
 
 - Dr. Who [2023-2025](https://www.tvmaze.com/shows/72724/doctor-who)
 - Dr. Who [2005-2022](https://www.tvmaze.com/shows/210/doctor-who)
@@ -22,81 +21,287 @@ JSON data files for this assignment were obtained from the TVMaze API for three 
 - [Torchwood: Web of Lies (2011)](https://www.tvmaze.com/shows/26694/torchwood-web-of-lies)
 
 # Warming Up
-
-For this portion of the assignment, only work with the canonical Dr. Who files (drwho2023.json, drwho2005.json, drwho1963.json). 
+For this portion of the assignment, only work with the canonical Dr. Who files (drwho72724.json, drwho210.json, drwho776.json). 
 
 ## Parse the file
-
 Add a code chunk that will read each of the JSON files in. 
-Store the data in a `drwhoYYYY` object, where `YYYY` is the first year the series  began to air. 
+Store the data in a `drwhoYYYY` object, where `YYYY` is the first year the series began to air. 
 How are the data objects stored?
 
+The data objects are stored as R data frames with each row representing a single episode and each column representing a variable describing that episode. Most columns contain simple atomic vectors such as integers, characters, or numeric values—for example, id, season, number, airdate, and runtime. However, some columns, such as rating, are themselves nested data frames containing additional variables, like average rating. This means that while the overall structure is tabular, some fields retain a list-like or record-based format that must be un-nested or extracted for full analysis. There is some redundancy in the data, such as airdate, airtime, and airstamp, which all convey timing information in slightly different formats. Overall, the objects combine rectangular tabular elements with nested components, reflecting the hierarchical nature of the original JSON data.
+
 ---
-
 ## Examining List Data Structures
-
 Create a nested markdown list showing what variables are nested at each level of the JSON file. Include an 'episode' object that is a stand-in for a generic episode (e.g. don't create a list with all 700+ episodes in it, just show what a single episode has). Make sure you use proper markdown formatting to ensure that the lists are rendered properly when you compile your document.
 
 Hint: The `prettify()` function in the R package `jsonlite` will spit out a better-formatted version of a JSON file. 
-
 ----
-
 List here
 
+```{r}
+# Load necessary libraries
+library(jsonlite)
+library(tidyverse)
+library(tidyr)
+```
+
+```{r}
+# Read the JSON file
+drwho1963 <- read_json("drwho-766.json", simplifyVector = TRUE)
+drwho1963 <- read_json("drwho-210.json", simplifyVector = TRUE)
+drwho1963 <- read_json("drwho-72724.json", simplifyVector = TRUE)
+#Dr. Who [2023-2025] 72724
+#Dr. Who [2005-2022] 210
+#Dr. Who [1963-1996] 766
+
+# Inspect the structure of the object (show first 3 levels)
+str(drwho1963, max.level = 3)
+```
+
+```{R}
+# Convert nested 'rating' column into tidy columns
+drwho1963_tidy <- drwho1963 %>%
+  unnest(cols = c(rating))  # converts rating$average into a column
+
+# Convert nested 'image' column into separate columns
+drwho1963_tidy <- drwho1963_tidy %>%
+  unnest_wider(image)
+
+# Convert nested '_links' columns into separate columns
+drwho1963_tidy <- drwho1963_tidy %>%
+  unnest_wider(`_links`) %>% 
+  unnest_wider(self, names_sep = "_") %>% 
+  unnest_wider(show, names_sep = "_")
+
+# View first 5 rows
+head(drwho1963_tidy, 5)
+```
+
+```{r}
+# Convert nested 'rating' column into tidy columns
+drwho2005_tidy <- drwho2005 %>%
+  unnest(cols = c(rating))  # converts rating$average into a column
+
+# Convert nested 'image' column into separate columns
+drwho2005_tidy <- drwho2005_tidy %>%
+  unnest_wider(image)
+
+# Convert nested '_links' columns into separate columns
+drwho2005_tidy <- drwho2005_tidy %>%
+  unnest_wider(`_links`) %>% 
+  unnest_wider(self, names_sep = "_") %>% 
+  unnest_wider(show, names_sep = "_")
+
+# View first 5 rows
+head(drwho2005_tidy, 5)
+```
+
+```{r}
+# Convert nested 'rating' column into tidy columns
+drwho2023_tidy <- drwho2023 %>%
+  unnest(cols = c(rating))  # converts rating$average into a column
+
+# Convert nested 'image' column into separate columns
+drwho2023_tidy <- drwho2023_tidy %>%
+  unnest_wider(image)
+
+# Convert nested '_links' columns into separate columns
+drwho2023_tidy <- drwho2023_tidy %>%
+  unnest_wider(`_links`) %>% 
+  unnest_wider(self, names_sep = "_") %>% 
+  unnest_wider(show, names_sep = "_")
+
+# View first 5 rows
+head(drwho2023_tidy, 5)
+```
+
 ----
-
 Is there any information stored in the list structure that you feel is redundant? If so, why?
+airdate, airtime, and airstamp all encode the same scheduling information, just in different formats. airdate is just the calendar date, airtime is the clock time, and airstamp is a full ISO timestamp. For most analsis, you only need one consistent format (ie airstamp, which combines both).
 
+medium and original both point to the same episode image but in different rezs.
 
 
 ## Develop A Strategy
-
 Consider what information you would need to examine the structure of Dr. Who episodes over time (show runtime, season length, specials) as well as the ratings, combining information across all three data files. 
 
 Sketch one or more rectangular data tables that look like your expected output. Remember that if you link to an image, you must link to something with a picture extension (`.png`, `.jpg`), and if you reference a file it should be using a local path and you must also add the picture to your git repository. 
+```{r}
+glimpse(drwho1963_tidy)
+glimpse(drwho2005_tidy)
+glimpse(drwho2023_tidy)
+```
 
 ---
-
-Sketch goes here
+ 1. Read in each JSON file with read_JSON
+ 2. Add a column indicating which series (1963, 2005, 2023) each dataset came from.
+ 3. Flatten nested columns:
+    - Extract rating$average into a numeric column `rating`.
+    - Extract image$medium or image$original into a single `image_url` column.
+    - Extract _links$self$href and _links$show$href if needed, or drop if redundant.
+ 4. Standardize date/time:
+    - Convert `airdate` to Date.
+    - Convert `airstamp` to POSIXct (keep only one representation).
+ 5. Select and rename core variables for analysis:
+    - Keep: series, season, number (episode), name (title), type, airdate, runtime, rating, summary.
+ 6. Bind rows from all three canonical Dr. Who datasets into one rectangular `episodes` table.
+ 7. Create a `seasons` summary table:
+    - Group by series + season.
+    - Summarize: num_episodes, avg_runtime, avg_rating, min(airdate), max(airdate).
+ 8. Create a `shows` metadata table:
+    - Extract unique show-level info (show_id, show_name, start_year, end_year, url).
+    - Store separately to avoid redundancy in episode-level data.
+    
+---
+# Episode-level table (episodes)
+# | series_label | season | ep_number | title               | type     | airdate    | runtime | rating |
+# | 1963         | 1      | 1          | An Unearthly Child  | regular  | 1963-11-23 | 25      | 8.1    | 
+# | 1963         | 1      | 2        | The Cave of Skulls  | regular  | 1963-11-30 | 25      | 7.2    |
 
 ---
+# Season summary table (seasons)
+# | series_label | season | num_episodes | avg_runtime | avg_rating | first_airdate | last_airdate 
+# | 1963         | 1      | 42           | 25          | 7.6        | 1963-11-23    | 1964-09-12   
+# | 1963         | 2      | 39           | 25          | 7.5        | 1964-09-19    | 1965-07-24   
 
+---
+# Show-level metadata table (shows)
+# | show_id | show_name   | series_label | start_year | end_year | url |
+# | 766     | Doctor Who  | 1963         | 1963       | 1996     | link
+
+
+
+---
 What operations will you need to perform to get the data into a form matching your sketch? Make an ordered list of steps you need to take.
 
+1. Read JSON into R.  
+2. Add source metadata: Append a `series_id` or `series_label` field (e.g., "1963", "2005", "2023") for easy tracking  
+3. Normalize nested structures:  
+   - Extract `rating$average` → numeric column `rating`.  
+   - Extract `image$medium` or `image$original` → character column `image_url`.  
+   - Extract `links$self$href` and `links$show$href` → character columns `episode_href`, `show_href`.  
+4. Standardize temporal variables:  
+   - Parse `airdate` with `as.Date()`.  
+   - Parse `airstamp` with `lubridate into "%Y-%m-%dT%H:%M:%S%z")`  
+   - Drop redundant time representations (`airtime`, raw character `airdate`).  
+
+5. Retain only analytics (`series_label`, `season`, `number` as `episode_number`, `name` as `title`, `type`, `airdate`, `runtime`, `rating`, `summary`).  
+6. Vertical concatenation: Combine canonical series datasets with `dplyr::bind_rows()` into a unified `episodes` table.  
+7. get season-level aggregates:  
+   - Group by `series_label` + `season`.  
+   - Compute `n()` (episode count), `mean(runtime, na.rm=TRUE)`, `mean(rating, na.rm=TRUE)`, `min(airdate)`, `max(airdate)`.  
+   - Output as `seasons` table.  
+8. Normalize show metadata: Deduplicate `show_href`, `show_name`, and `series_label`; extract start/end years from min/max `airdate`. Store in a separate `shows` table.  
+
+
 ---
-
-1. ... fill me in
-2. ...
-3. ...
-
 ## Implement Your Strategy
-
 Add a code chunk that will convert the JSON files into the table(s) you sketched above. 
 Make sure that the resulting tables have the correct variable types (e.g., dates should not be stored as character variables).
 
 Print out the first 5 rows of each table that you create (but no more)!
 
-## Examining Episode Air Dates
+```{r}
+# 1. Read JSON files
+drwho1963 <- read_json("drwho-766.json", simplifyVector = TRUE) %>%
+  as_tibble() %>%
+  mutate(series_label = "1963")
 
+drwho2005 <- read_json("drwho-210.json", simplifyVector = TRUE) %>%
+  as_tibble() %>%
+  mutate(series_label = "2005")
+
+drwho2023 <- read_json("drwho-72724.json", simplifyVector = TRUE) %>%
+  as_tibble() %>%
+  mutate(series_label = "2023")
+```
+
+```{r}
+# 2. Cleaning function
+clean_drwho <- function(df) {
+  df %>%
+    unnest_wider(average, names_sep = "_") %>%   # extract rating
+    unnest_wider(image, names_sep = "_") %>%    # extract image URLs
+    unnest_wider(`_links`, names_sep = "_") %>%
+    unnest_wider(`_links_self`, names_sep = "_") %>%
+    unnest_wider(`_links_show`, names_sep = "_") %>%
+    rename(
+      rating = rating_average,
+      image_medium = image_medium,
+      image_original = image_original,
+      self_href = href,
+      show_href = href1
+    ) %>%
+    mutate(
+      airdate = as.Date(airdate),  # convert to Date
+      airstamp = as.POSIXct(airstamp, format = "%Y-%m-%dT%H:%M:%S%z")
+    ) %>%
+    select(series_label, season, number, name, type,
+           airdate, airstamp, runtime, rating,
+           summary, image_medium, image_original,
+           url, self_href, show_href)
+}
+```
+
+```{r}
+# 3. Apply cleaning
+drwho1963_clean <- clean_drwho(drwho1963_tidy)
+drwho2005_clean <- clean_drwho(drwho2005_tidy)
+drwho2023_clean <- clean_drwho(drwho2023_tidy)
+
+# 4. Print head
+cat("\nDoctor Who (1963–1996)\n")
+print(head(drwho1963_clean, 5))
+
+cat("\nDoctor Who (2005–2022)\n")
+print(head(drwho2005_clean, 5))
+
+cat("\nDoctor Who (2023–2025)\n")
+print(head(drwho2023_clean, 5))
+```
+
+## Examining Episode Air Dates
 Visually represent the length of time between air dates of adjacent episodes within the same season, across all seasons of Dr. Who. You may need to create a factor to indicate which Dr. Who series is indicated, as there will be a Season 1 for each of the series. 
 Your plot must have appropriate labels and a title.
 
+```{r}
+# Combine all three cleaned datasets into one (assuming you already ran clean_drwho_df for each)
+who_all <- bind_rows(drwho1963_clean, drwho2005_clean, drwho2023_clean)
+
+# Compute time differences in days between consecutive episodes within each series/season
+who_gaps <- who_all %>%
+  arrange(series_label, season, airdate) %>%
+  group_by(series_label, season) %>%
+  mutate(
+    gap_days = as.numeric(difftime(airdate, lag(airdate), units = "days"))
+  ) %>%
+  ungroup()
+
+# Plot gaps by season and series
+ggplot(who_gaps, aes(x = season, y = gap_days, color = series_label)) +
+  geom_point() +
+  geom_line(aes(group = interaction(series_label, season)), alpha = 0.6) +
+  labs(
+    title = "Air Date Gaps Between Consecutive Doctor Who Episodes",
+    x = "Season",
+    y = "Gap Between Episodes (days)",
+    color = "Series"
+  ) +
+  theme_minimal()
+
+```
+
+
 ---
-
-code chunk here
-
----
-
 In 2-3 sentences, explain what conclusions you might draw from the data. What patterns do you notice? Are there data quality issues?
+The data show that Doctor Who generally follows a weekly release schedule across all eras, with the 1963 series having fairly consistent 7-day gaps, while the 2005 and  The 2023 episodes appear tightly clustered around weekly gaps with some breaks either due to special events (ie christmas). A few extreme outliers (e.g., 80–170+ day breaks) suggest either intentional production pauses or possible data quality issues that warrant further verificity.
 
+---
 # Timey-Wimey Series and Episodes
-
 ## Setting Up
-
 In this section of the assignment, you will work with all of the provided JSON files. 
 Use a functional programming approach to read in all of the files and bind them together. 
 
-----
 
 functional code goes here
 
@@ -106,13 +311,13 @@ Then, use the processing code you wrote for the previous section to perform appr
 At the end of the chunk, your data should be in a reasonably tidy, rectangular form with appropriate data types. 
 Call this rectangular table `whoverse`. 
 
+```{r}
+whoverse <- who_all
+
+```
+
+
 ----
-
-Cleaning code goes here
-
-----
-
-
 ## Air Time
 
 Investigate the air time of the episodes relative to the air date, series, and season.
@@ -157,10 +362,9 @@ Any results (graphics, tables, models) should be explained with at least 2-3 sen
 If you're stuck, consider examining the frequency of words in the episode descriptions across different series or seasons. Or, look at the episode guest cast by appending `/guestcast/` to the episode URL and see whether there are common guests across different seasons. 
 
 ----
-
 Question goes here
 
-----
+
 
 Code goes here -- once you output a result, you should explain it using markdown text, and then start a new code chunk to continue your exploration. 
 
